@@ -7,7 +7,7 @@ function App() {
     <MainLayout>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Các route khác sẽ thêm sau */}
+        <Route path="/search" element={<Search />} />
       </Routes>
     </MainLayout>
   );
