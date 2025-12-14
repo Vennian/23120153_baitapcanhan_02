@@ -12,12 +12,13 @@ const MainLayout = ({ children }) => {
     <div className="min-h-screen bg-white dark:bg-slate-900 text-black dark:text-white transition-colors">
       {/* Header theo mẫu: có MSSV (0.5 điểm) */}
       <header className="bg-red-100 dark:bg-red-950 py-1 text-center text-xs border-b">
-        <span>&lt;23120153&gt;</span>
-        <span className="mx-10 font-bold uppercase">Movies info</span>
-        <button onClick={() => setDarkMode(!darkMode)} className="ml-4 border px-2 rounded">
-          {darkMode ? '☀️ Light' : '🌙 Dark'}
-        </button>
-      </header>
+         <span>&lt;23120153&gt;</span>
+         <span className="mx-10 font-bold uppercase">MOVIES INFO</span>
+         <button onClick={() => setDarkMode(!darkMode)} className="ml-4 border px-2 rounded">
+           {/* Sửa lại text cho đúng logic */}
+           {darkMode ? '☀️ Light' : '🌙 Dark'} 
+         </button>
+         </header>
 
       {/* Nội dung chính: Max 1200px (Bắt buộc) */}
       <main className="max-w-[1200px] mx-auto p-4 min-h-screen">
