@@ -8,13 +8,13 @@ const Home = () => {
   useEffect(() => {
     const loadData = async () => {
       // Gọi đúng Endpoint từ Swagger: /movies/most-popular
-      const popularRes = await fetchMovies('/movies/most-popular');
+      const popularRes = await fetchMovies('/movies/most-popular?limit=30');
       if (popularRes && popularRes.data) {
         setPopularMovies(popularRes.data);
       }
 
       // Gọi đúng Endpoint từ Swagger: /movies/top-rated
-      const topRes = await fetchMovies('/movies/top-rated');
+      const topRes = await fetchMovies('/movies/top-rated?limit=5');
       if (topRes && topRes.data) {
         setTopRatedMovies(topRes.data.slice(0, 5));
       }
