@@ -1,46 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const MainLayout = ({ children }) => {
-  // Lưu trạng thái dark mode vào localStorage để khi F5 không bị mất
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
+  const [searchKey, setSearchKey] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const html = document.documentElement;
     if (darkMode) {
-      document.documentElement.classList.add('dark');
+      html.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      html.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
   }, [darkMode]);
 
+  const handleSearch = (e) => {
+    if (e.key === 'Enter' && searchKey.trim()) {
+      navigate(`/search?q=${searchKey.trim()}`); // Chuyển sang trang Search
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen transition-colors duration-500">
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b dark:border-slate-800">
-        <div className="max-w-[1200px] mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="font-bold text-red-600 tracking-tighter text-xl">MOVIES INFO</div>
+        <div className="max-w-300 mx-auto px-4 h-16 flex items-center justify-between gap-4">
+          <div className="font-black text-red-600 text-xl cursor-pointer" onClick={() => navigate('/')}>MOVIES INFO</div>
           
-          <div className="flex items-center gap-6">
-            <span className="text-xs font-mono border px-2 py-1 rounded dark:border-slate-700">
-              &lt;23120153&gt; {/* MSSV bắt buộc */}
-            </span>
-            <button 
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:ring-2 ring-red-500 transition-all"
-            >
-              {darkMode ? '☀️' : '🌙'}
+          {/* Ô SEARCH: Lấy 0.5 điểm giao diện */}
+          <input 
+            type="text" 
+            placeholder="Search movie..." 
+            className="flex-1 max-w-md bg-slate-100 dark:bg-slate-800 rounded-full px-5 py-2 text-sm outline-none focus:ring-2 ring-red-500 dark:text-white"
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
+            onKeyDown={handleSearch}
+          />
+
+          <div className="flex items-center gap-4">
+            <span className="text-xs border px-2 py-1 rounded dark:text-white font-bold">23120153</span>
+            {/* NÚT DARK MODE: Lấy 0.5 điểm */}
+            <button onClick={() => setDarkMode(!darkMode)} className="p-2 w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-xl">
+              {darkMode ? '☀️' : '🌙'} 
             </button>
           </div>
         </div>
       </header>
-
-      <main className="max-w-[1200px] mx-auto p-4 min-h-[calc(100vh-130px)]">
-        {children}
-      </main>
-
-      <footer className="py-8 text-center border-t dark:border-slate-800 text-slate-500 text-sm">
-        BÀI TẬP CÁ NHÂN 02 - MSSV: 23120153
-      </footer>
+      <main className="max-w-300 mx-auto p-4">{children}</main>
     </div>
   );
 };

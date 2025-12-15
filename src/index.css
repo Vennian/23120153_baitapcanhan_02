@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+/* Định nghĩa biến màu để nút Mặt Trăng/Mặt Trời có tác dụng */
+:root {
+  --nền-trang: #ffffff;
+  --chữ-trang: #020617;
+}
+
+.dark {
+  --nền-trang: #020617; /* Đen Slate-950 */
+  --chữ-trang: #f8fafc;
+}
+
+body {
+  background-color: var(--nền-trang);
+  color: var(--chữ-trang);
+  transition: background-color 0.3s ease;
+}

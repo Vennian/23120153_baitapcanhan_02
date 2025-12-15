@@ -12,6 +12,7 @@ const Home = () => {
       setLoading(true);
       try {
         // 1. Lấy dữ liệu cho Slide (Top 5): Bắt buộc category
+        // Endpoint chuẩn: /movies/top-rated?category=IMDB_TOP_50&limit=5
         const topRes = await fetchMovies('/movies/top-rated?category=IMDB_TOP_50&limit=5');
         if (topRes && topRes.data) {
           setTopRatedMovies(topRes.data);
@@ -25,7 +26,7 @@ const Home = () => {
         if (resPage1?.data) combined = [...resPage1.data];
         if (resPage2?.data) combined = [...combined, ...resPage2.data];
         
-        setPopularMovies(combined);
+        setPopularMovies(combined); // Tổng 24 phim, đạt yêu cầu 15-30 phim
       } catch (error) {
         console.error("Lỗi tải dữ liệu:", error);
       } finally {
@@ -40,7 +41,8 @@ const Home = () => {
   return (
     <div className="space-y-12 pb-10">
       {/* SECTION 1: HERO SLIDER (0.5đ) */}
-      <section className="relative h-[500px] w-full overflow-hidden rounded-3xl bg-slate-900 shadow-2xl group">
+      {/* Chỉnh sửa class h-125 cho Tailwind v4 theo log lỗi của bạn */}
+      <section className="relative h-125 w-full overflow-hidden rounded-3xl bg-slate-900 shadow-2xl group">
         {topRatedMovies.length > 0 && (
           <Link to={`/movies/${topRatedMovies[0].id}`} className="relative h-full w-full block">
             <img 
@@ -48,7 +50,8 @@ const Home = () => {
               className="h-full w-full object-cover opacity-60 transition-transform duration-1000 group-hover:scale-105" 
               alt="Slide" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent flex flex-col justify-end p-12">
+            {/* Chỉnh sửa bg-linear-to-t cho Tailwind v4 */}
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent flex flex-col justify-end p-12">
               <span className="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full w-fit mb-4 tracking-widest uppercase">Featured</span>
               <h2 className="text-5xl font-black text-white drop-shadow-2xl">{topRatedMovies[0].title}</h2>
               <div className="flex items-center gap-4 mt-4">
@@ -74,7 +77,8 @@ const Home = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
           {popularMovies.map(movie => (
             <Link key={movie.id} to={`/movies/${movie.id}`} className="group cursor-pointer">
-              <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-slate-200 dark:bg-slate-800 shadow-lg">
+              {/* Chỉnh sửa aspect-2/3 cho Tailwind v4 */}
+              <div className="relative aspect-2/3 overflow-hidden rounded-2xl bg-slate-200 dark:bg-slate-800 shadow-lg">
                 <img 
                   src={movie.image} 
                   alt={movie.title}
